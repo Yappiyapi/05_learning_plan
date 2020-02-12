@@ -67,10 +67,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <p>
     <form action="" method="post">
       <label for="title">学習内容:
-        <input type="text">
+        <input type="text" name="title">
       </label><br>
       <label for="due_date">期限日:
-        <input type="date" name="" id="">
+        <input type="date" name="due_date" id="">
         <input type="submit" value="追加">
       </label>
       <?php if (count($errors) > 0) : ?>
@@ -83,16 +83,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
   </p>
   <h2>未達成</h2>
-  <ul class="expired">
+  <ul>
   <?php foreach ($notyet_plans as $plan) : ?>
     <li>
       <a href="done.php?id=<?php echo h($plan['id']); ?>">[完了]</a>
-<!-- 編集用のリンクを追記 -->
-    <a href="edit.php?id=<?php echo h($plan['id']); ?>">[編集]</a>
+      <a href="edit.php?id=<?php echo h($plan['id']); ?>">[編集]</a>
       <?php echo h($plan['title'] . '…完了期限:'); ?>
       <?php echo h(date('Y/m/d', strtotime($plan['due_date']))); ?>
       <?php if (date('Y-m-d') >= $plan['due_date']) : ?>
+        <li class="expired">
       <?php else : ?>
+        <li>
       <?php endif; ?>
     </li>
   <?php endforeach; ?>
