@@ -6,9 +6,6 @@
   // データベースへの接続
   $dbh = connectDb();
 
-  // 受け取ったレコードのID
-  $id = $_GET['id'];
-
   // SQLの準備と実行
   $sql = "select * from plans where id = :id";
   $stmt = $dbh->prepare($sql);
@@ -34,12 +31,12 @@
 
 // エラーが1つもなければレコードを更新
   if (empty($errors)) {
-    $sql = "update plans set title = :title," . "updated_at = now()" . "where id = :id";
-
-    $stmt = $dbh->prepare($sql);
-    $stmt->bindParam(":title", $title);
-    $stmt->bindParam(":id", $id);
-    $stmt->execute();
+  $sql = "update plans set (title, due_date, created_at, updated_at)
+  values (:title, :due_date, now(), now())";
+  $stmt = $dbh->prepare($sql);
+  $stmt->bindParam(":title", $title);
+  $stmt->bindParam(":due_date", $due_date);
+  $stmt->execute();
 
     header('Location: index.php');
     exit;
@@ -56,11 +53,11 @@
   <h2>編集</h2>
   <p>
     <form action="" method="post">
-      <label for="">学習内容:
-        <input type="text">
+      <label for="title">学習内容:
+        <input type="text" name="title">
       </label>
-      <label for="">期限日:
-        <input type="date" name="" id="">
+      <label for="due_date">期限日:
+        <input type="date" name="due_date" id="">
         <input type="submit" value="編集">
       </label>
       <?php if (count($errors) > 0) : ?>
