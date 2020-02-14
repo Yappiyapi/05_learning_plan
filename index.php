@@ -73,22 +73,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="date" name="due_date" id="">
         <input type="submit" value="追加">
       </label>
-      <?php if (count($errors) > 0) : ?>
-        <ul style="color:red;">
-          <?php foreach ($errors as $key => $value) : ?>
-            <li><?php echo h($value); ?></li>
-          <?php endforeach; ?>
-        </ul>
-      <?php endif; ?>
     </form>
   </p>
+    <?php if (count($errors) > 0) : ?>
+      <ul style="color:red;">
+        <?php foreach ($errors as $key => $value) : ?>
+          <li><?php echo h($value); ?></li>
+        <?php endforeach; ?>
+      </ul>
+    <?php endif; ?>
   <h2>未達成</h2>
   <ul>
   <?php foreach ($notyet_plans as $plan) : ?>
     <?php if (date('Y-m-d') >= $plan['due_date']) : ?>
-    <li class="expired">
+      <li class="expired">
     <?php else : ?>
-    <li>
+      <li>
     <?php endif; ?>
       <a href="done.php?id=<?php echo h($plan['id']); ?>">[完了]</a>
       <a href="edit.php?id=<?php echo h($plan['id']); ?>">[編集]</a>

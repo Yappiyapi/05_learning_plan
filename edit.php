@@ -1,32 +1,32 @@
-  <?php
+<?php
 
-  require_once('config.php');
-  require_once('functions.php');
+require_once('config.php');
+require_once('functions.php');
 
-  // データベースへの接続
-  $dbh = connectDb();
+// データベースへの接続
+$dbh = connectDb();
 
-  // SQLの準備と実行
-  $sql = "select * from plans where id = :id";
-  $stmt = $dbh->prepare($sql);
-  $stmt->bindParam(":id", $id);
-  $stmt->execute();
+// SQLの準備と実行
+$sql = "select * from plans where id = :id";
+$stmt = $dbh->prepare($sql);
+$stmt->bindParam(":id", $id);
+$stmt->execute();
 
-  // 結果の取得
-  $plan = $stmt->fetch(PDO::FETCH_ASSOC);
+// 結果の取得
+$plan = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // 受け取ったデータ// タスクの編集
-  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $title = $_POST['title'];
   $due_date = $_POST['due_date'];
 
   $errors = [];
   if ($title == '') {
-    $errors['title'] = '学習内容を入力してください';
+  $errors['title'] = '学習内容を入力してください';
   }
 
   if ($due_date == '') {
-    $errors['due_date'] = '日付が変更されていません';
+  $errors['due_date'] = '日付が変更されていません';
   }
 
 // エラーが1つもなければレコードを更新
@@ -38,8 +38,8 @@
   $stmt->bindParam(":due_date", $due_date);
   $stmt->execute();
 
-    header('Location: index.php');
-    exit;
+  header('Location: index.php');
+  exit;
   }
 }
   ?>
@@ -60,14 +60,14 @@
         <input type="date" name="due_date" id="">
         <input type="submit" value="編集">
       </label>
-      <?php if (count($errors) > 0) : ?>
-    <ul style="color:red;">
-    <?php foreach ($errors as $key => $value) : ?>
-      <li><?php echo h($value); ?></li>
-    <?php endforeach; ?>
-  </ul>
-<?php endif; ?>
     </form>
   </p>
+    <?php if (count($errors) > 0) : ?>
+      <ul style="color:red;">
+        <?php foreach ($errors as $key => $value) : ?>
+          <li><?php echo h($value); ?></li>
+        <?php endforeach; ?>
+      </ul>
+    <?php endif; ?>
   </body>
   </html>
