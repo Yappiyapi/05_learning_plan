@@ -75,10 +75,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </label>
     </form>
   </p>
-    <?php if (count($errors) > 0) : ?>
+    <?php if ($errors) : ?>
       <ul style="color:red;">
-        <?php foreach ($errors as $key => $value) : ?>
-          <li><?php echo h($value); ?></li>
+        <?php foreach ($errors as $error) : ?>
+          <li><?php echo h($error); ?></li>
         <?php endforeach; ?>
       </ul>
     <?php endif; ?>
