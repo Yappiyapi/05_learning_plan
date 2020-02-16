@@ -71,5 +71,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endforeach; ?>
       </ul>
     <?php endif; ?>
-  </body>
-  </html>
+</body>
+</html>
