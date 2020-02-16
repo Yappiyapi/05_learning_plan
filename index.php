@@ -33,21 +33,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errors['due_date'] = '期限を入力してください';
   }
 
-// if ($title === $post['title'] && $body === $post['due_date']) {
-//   $errors['unchanged'] = '変更されていません';
-// }
-
   if (empty($errors)) {
-  $sql = "insert into plans (title, due_date, created_at, updated_at)
-  values (:title, :due_date, now(), now())";
-  $stmt = $dbh->prepare($sql);
-  $stmt->bindParam(":title", $title);
-  $stmt->bindParam(":due_date", $due_date);
-  $stmt->execute();
+    $sql = "insert into plans (title, due_date, created_at, updated_at)
+    values (:title, :due_date, now(), now())";
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindParam(":title", $title);
+    $stmt->bindParam(":due_date", $due_date);
+    $stmt->execute();
 
-  //index.phpに戻る
-  header('Location: index.php');
-  exit;
+    //index.phpに戻る
+    header('Location: index.php');
+    exit;
   }
 }
 ?>
@@ -97,7 +93,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <?php endforeach; ?>
   </ul>
   <hr>
-  <h2>達成済み</h2<ul>
+  <h2>達成済み</h2>
+  <ul>
   <?php foreach ($done_plans as $plan) : ?>
     <li>
       <?php echo h($plan['title']); ?>

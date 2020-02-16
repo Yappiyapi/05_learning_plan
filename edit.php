@@ -31,15 +31,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // エラーが1つもなければレコードを更新
   if (empty($errors)) {
-  $sql = "update plans set (title, due_date, created_at, updated_at)
-  values (:title, :due_date, now(), now())";
-  $stmt = $dbh->prepare($sql);
-  $stmt->bindParam(":title", $title);
-  $stmt->bindParam(":due_date", $due_date);
-  $stmt->execute();
+    $sql = "update plans set (title, due_date, created_at, updated_at)
+    values (:title, :due_date, now(), now())";
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindParam(":title", $title);
+    $stmt->bindParam(":due_date", $due_date);
+    $stmt->execute();
 
-  header('Location: index.php');
-  exit;
+    header('Location: index.php');
+    exit;
   }
 }
 ?>
