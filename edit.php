@@ -17,21 +17,20 @@ $plan = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // 受け取ったデータ// タスクの編集
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $title = $_POST['title'];
+  $due_date = $_POST['due_date'];
 
-$title = $_POST['title'];
-$due_date = $_POST['due_date'];
+  $errors = [];
+  if ($title == '') {
+    $errors['title'] = '学習内容を入力してください';
+  }
 
-$errors = [];
-if ($title == '') {
-  $errors['title'] = '学習内容を入力してください';
-}
-
-if ($due_date == '') {
-  $errors['due_date'] = '日付が変更されていません';
-}
+  if ($due_date == '') {
+    $errors['due_date'] = '日付が変更されていません';
+  }
 
 // エラーが1つもなければレコードを更新
-if (empty($errors)) {
+  if (empty($errors)) {
   $sql = "update plans set (title, due_date, created_at, updated_at)
   values (:title, :due_date, now(), now())";
   $stmt = $dbh->prepare($sql);
@@ -41,9 +40,10 @@ if (empty($errors)) {
 
   header('Location: index.php');
   exit;
-}
+  }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -51,18 +51,17 @@ if (empty($errors)) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>編集画面</title>
-  </head>
-  <body>
+</head>
+<body>
   <h2>編集</h2>
   <p>
     <form action="" method="post">
       <label for="title">学習内容:
         <input type="text" name="title">
       </label>
-      <label for="due_date">期限日:
+      <label for="due_date">期限日:</label>
         <input type="date" name="due_date" id="">
         <input type="submit" value="編集">
-      </label>
     </form>
   </p>
     <?php if ($errors) : ?>
