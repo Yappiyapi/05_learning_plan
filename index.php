@@ -95,11 +95,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <hr>
   <h2>達成済み</h2>
   <ul>
-  <?php foreach ($done_plans as $plan) : ?>
-    <li>
-      <?php echo h($plan['title']); ?>
-    </li>
-  <?php endforeach; ?>
+    <?php foreach ($done_plans as $plan) : ?>
+      <li>
+        <?php echo h($plan['title']); ?>
+      </li>
+    <?php endforeach; ?>
   </ul>
 </body>
 </html>
